@@ -13,7 +13,7 @@ var dir_build = path.resolve(__dirname, 'static');
 module.exports = {
     entry: {
         bundle: path.resolve(dir_ts, 'main.ts'),
-        test: glob.sync(dir_tests_ts + '/**/*.ts'),
+        // test: glob.sync(dir_tests_ts + '/**/*.ts').
     },
     output: {
         path: dir_build,
@@ -41,6 +41,10 @@ module.exports = {
             {
                 from: 'assets/img',
                 to: 'img'
+            },
+            {
+                from: 'assets/data',
+                to: 'data'
             } // to: output.path
         ]),
         // Avoid publishing files when compilation fails

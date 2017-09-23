@@ -2,7 +2,7 @@
     "compilerOptions": {
         "lib": ["DOM", "es2017"],
         "types" : [
-            "pixi.js",
+            "matter-js",
             "mocha"
         ],
         "target": "ES2017",
