@@ -1,7 +1,11 @@
 import * as Matter from 'matter-js';
+import Palette from '../misc/palette';
+import '../misc/augment';
 
 import Settings from '../misc/settings';
-import { SystemType } from '../misc/enum'
+import { SystemType } from '../misc/enum';
+
+
 
 export default class RenderSystem {
 
@@ -11,10 +15,14 @@ export default class RenderSystem {
     private _engine: Matter.Engine;
     private _render: Matter.Render;
 
+    private _palette: Palette;
+
     constructor(settings) {
 
         this._systemType = SystemType.RENDER;
         this._settings = settings;
+
+        this._palette = new Palette();
     }
 
     init() {
@@ -23,7 +31,11 @@ export default class RenderSystem {
 
         this._render = Matter.Render.create({
             element: document.body,
-            engine: this._engine
+            engine: this._engine,
+            options: {
+                background: this._palette.getColourById('veniceblue').rgb,
+                wireframes: false
+            }
         });
 
         Matter.World.add(this._engine.world, []);
@@ -39,16 +51,21 @@ export default class RenderSystem {
         let entity = Matter.Body.create({
             isStatic: true,
             position: {
-                x: 20,
-                y: 20
+                x: 9,
+                y: 17
             },
             vertices: [
                 { x: 0, y: 0 },
-                { x: 0, y: 16 },
-                { x: 16, y: 16 },
+                { x: 0, y: 32 },
+                { x: 16, y: 32 },
                 { x: 16, y: 0 }
-            ]
+            ],
+            render: {
+                fillStyle: this._palette.getColourById('mandy').rgb,
+                lineWidth: 0
+            }
         });
+
 
         return entity;
     }

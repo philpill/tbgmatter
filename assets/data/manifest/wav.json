@@ -1,0 +1,9 @@
+{
+    "path": "/static/wav/",
+    "manifest": [
+        {
+            "id": "audio-hup",
+            "src" : "hup.wav"
+        }
+    ]
+}

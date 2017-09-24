@@ -1,0 +1,9 @@
+{
+    "path": "/static/data/maps/",
+    "manifest": [
+        {
+            "id" : "json-level-1",
+            "src": "level1.json"
+        }
+    ]
+}
