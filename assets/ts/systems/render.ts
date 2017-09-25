@@ -9,6 +9,8 @@ import { Colours } from '../misc/enum';
 import Block from '../prefabs/block';
 import Player from '../prefabs/player';
 
+import EntityManager from '../managers/entity';
+
 export default class RenderSystem {
 
     private _systemType: SystemType;
@@ -19,34 +21,24 @@ export default class RenderSystem {
 
     private _palette: Palette;
 
+    private _entityManager: EntityManager;
+
     constructor(settings: ISettings) {
 
         this._systemType = SystemType.RENDER;
         this._settings = settings;
+
+        this._entityManager = new EntityManager(this._settings);
 
         this._palette = new Palette();
     }
 
     init() {
 
-        this._engine = Matter.Engine.create();
+        this._entityManager.init();
 
-        this._render = Matter.Render.create({
-            element: document.body,
-            engine: this._engine,
-            options: {
-                background: this._palette.getColourByEnum(Colours.veniceblue).rgb,
-                wireframes: false
-            }
-        });
-
-        Matter.World.add(this._engine.world, []);
-
-        Matter.Engine.run(this._engine);
-        Matter.Render.run(this._render);
-
-        this.addEntity(this.getBlock());
-        this.addEntity(this.getPlayer());
+        this._entityManager.addEntity(this.getBlock());
+        this._entityManager.addEntity(this.getPlayer());
     }
 
     getPlayer(): any {
@@ -74,25 +66,8 @@ export default class RenderSystem {
         return entity;
     }
 
-    getEntities(): Matter.Body[] {
-
-        return Matter.World.allBodies(this._engine.world);
-    }
-
-    addEntity(entity: Matter.Body) {
-
-        Matter.World.addBody(this._engine.world, entity);
-    }
-
-    removeEntity(entity: Matter.Body) {
-
-        Matter.World.remove(this._engine.world, entity);
-    }
-
     update(delta: number) {
 
-        Matter.Engine.update(this._engine, delta);
-
-        // console.log(delta);
+        this._entityManager.update(delta);
     }
 }

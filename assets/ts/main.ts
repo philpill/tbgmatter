@@ -1,4 +1,4 @@
-import * as matter from 'matter-js';
+import * as Matter from 'matter-js';
 
 import { ISettings } from './misc/iSettings';
 import Settings from './misc/settings';
@@ -30,8 +30,7 @@ export default class Main {
 
         await this._resourceManager.load();
         let data = this._resourceManager.getLevelData(0);
-        let entities = this._levelManager.loadLevel(data);
-        this._entityManager.addEntities(entities);
+        this._levelManager.loadLevel(data);
         this._engine.init();
     }
 }
