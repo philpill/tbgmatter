@@ -1,6 +1,8 @@
-export default class Settings {
+import { ISettings } from './iSettings';
 
-    constructor() {
+let Settings: ISettings = {
 
-    }
-}
+
+};
+
+export default Settings;

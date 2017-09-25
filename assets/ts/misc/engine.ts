@@ -1,11 +1,11 @@
-import Settings from './settings';
+import { ISettings } from './iSettings';
 import RenderSystem from '../systems/render';
 
 export default class Engine {
 
     _renderSystem: RenderSystem;
 
-    constructor(settings: Settings) {
+    constructor(settings: ISettings) {
 
         this._renderSystem = new RenderSystem(settings);
     }
@@ -22,6 +22,8 @@ export default class Engine {
         let now = performance.now();
 
         let delta = (now - before)/1000;
+
+        delta = Math.min(delta, 0.1); // magic number to prevent massive delta when tab not active
 
         requestAnimationFrame(() => {
 

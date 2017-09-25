@@ -2,22 +2,24 @@ import * as Matter from 'matter-js';
 import Palette from '../misc/palette';
 import '../misc/augment';
 
-import Settings from '../misc/settings';
+import { ISettings } from '../misc/iSettings';
 import { SystemType } from '../misc/enum';
+import { Colours } from '../misc/enum';
 
-
+import Block from '../prefabs/block';
+import Player from '../prefabs/player';
 
 export default class RenderSystem {
 
     private _systemType: SystemType;
-    private _settings: Settings;
+    private _settings: ISettings;
 
     private _engine: Matter.Engine;
     private _render: Matter.Render;
 
     private _palette: Palette;
 
-    constructor(settings) {
+    constructor(settings: ISettings) {
 
         this._systemType = SystemType.RENDER;
         this._settings = settings;
@@ -33,7 +35,7 @@ export default class RenderSystem {
             element: document.body,
             engine: this._engine,
             options: {
-                background: this._palette.getColourById('veniceblue').rgb,
+                background: this._palette.getColourByEnum(Colours.veniceblue).rgb,
                 wireframes: false
             }
         });
@@ -44,25 +46,27 @@ export default class RenderSystem {
         Matter.Render.run(this._render);
 
         this.addEntity(this.getBlock());
+        this.addEntity(this.getPlayer());
     }
 
-    getBlock(): Matter.Body {
+    getPlayer(): any {
 
-        let entity = Matter.Body.create({
-            isStatic: true,
+        let entity = new Player(this._settings, {
             position: {
                 x: 9,
                 y: 17
-            },
-            vertices: [
-                { x: 0, y: 0 },
-                { x: 0, y: 32 },
-                { x: 16, y: 32 },
-                { x: 16, y: 0 }
-            ],
-            render: {
-                fillStyle: this._palette.getColourById('mandy').rgb,
-                lineWidth: 0
+            }
+        });
+
+        return entity;
+    }
+
+    getBlock(): any {
+
+        let entity = new Block(this._settings, {
+            position: {
+                x: 8,
+                y: 200
             }
         });
 

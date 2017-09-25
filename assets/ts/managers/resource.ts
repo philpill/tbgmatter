@@ -1,13 +1,13 @@
-import Settings from '../misc/settings';
+import { ISettings } from '../misc/iSettings';
 
 declare var createjs: any; // until they sort out their @types
 
 export default class ResourceManager {
 
-    private _settings: Settings;
+    private _settings: ISettings;
     private _preload: any;
 
-    constructor(settings: Settings) {
+    constructor(settings: ISettings) {
 
         this._settings = settings;
 

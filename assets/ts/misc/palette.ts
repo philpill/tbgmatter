@@ -1,3 +1,5 @@
+import { Colours } from '../misc/enum';
+
 export default class Palette {
 
 /*
@@ -86,5 +88,9 @@ https://raw.githubusercontent.com/denilsonsa/gimp-palettes/master/palettes/DawnB
         return this._palette.find((colour: any) => {
             return colour.id === id;
         });
+    }
+
+    getColourByEnum(val: Colours) {
+        return this.getColourById(Colours[val]);
     }
 }
