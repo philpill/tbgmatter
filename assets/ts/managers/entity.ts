@@ -10,26 +10,25 @@ import '../misc/augment';
 import { SystemType } from '../misc/enum';
 import { Colours } from '../misc/enum';
 
-let instance = null;
 
 export default class EntityManager {
+
+    private static _instance: EntityManager;
 
     private _settings: ISettings;
     private _engine: Matter.Engine;
     private _render: Matter.Render;
     private _palette: Palette;
 
-
-    constructor(settings: ISettings) {
-
-        if (!instance) {
-            instance = this;
-        }
+    private constructor(settings: ISettings) {
 
         this._palette = new Palette();
         this._settings = settings;
+    }
 
-        return instance;
+    static Instance(settings: ISettings)
+    {
+        return this._instance || (this._instance = new this(settings));
     }
 
     init() {

@@ -8,19 +8,19 @@ export default function(settings: ISettings, options: Matter.IBodyDefinition): M
     let palette = new Palette();
 
     Matter.Common.extend(options, {
+        isStatic: true,
         vertices: [
             { x: 0, y: 0 },
-            { x: 0, y: 32 },
-            { x: 16, y: 32 },
+            { x: 0, y: 16 },
+            { x: 16, y: 16 },
             { x: 16, y: 0 }
         ],
         render: {
-            fillStyle: palette.getColourByEnum(Colours.mandy).rgb
+            fillStyle: palette.getColourByEnum(Colours.rope).rgb
         },
-        inertia: Infinity,
         collisionFilter: {
-            mask: 0x0001
-        },
+            category: 0x0002
+        }
     });
 
     return Matter.Body.create(options);

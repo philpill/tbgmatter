@@ -12,8 +12,6 @@ export default class ResourceManager {
         this._settings = settings;
 
         this._preload = new createjs.LoadQueue(true);
-
-
     }
 
     async load(): Promise<any> {
