@@ -1,34 +1,32 @@
 import * as Matter from 'matter-js';
-import { ISettings } from '../misc/iSettings';
 import { ITiledLevel } from '../misc/iTiled';
 
-import Block from '../prefabs/block';
+import Entity from '../misc/entity';
 
-import Palette from '../misc/palette';
+import Block from '../prefabs/block';
+import DisplayComponent from '../components/display';
+
+import ColourManager from '../managers/colour';
 import '../misc/augment';
 
-import { SystemType } from '../misc/enum';
-import { Colours } from '../misc/enum';
-
+import { SystemType, Colours } from '../misc/enum';
 
 export default class EntityManager {
 
     private static _instance: EntityManager;
 
-    private _settings: ISettings;
     private _engine: Matter.Engine;
     private _render: Matter.Render;
-    private _palette: Palette;
+    private _colourManager: ColourManager;
 
-    private constructor(settings: ISettings) {
+    private constructor() {
 
-        this._palette = new Palette();
-        this._settings = settings;
+        this._colourManager = ColourManager.Instance();
     }
 
-    static Instance(settings: ISettings)
-    {
-        return this._instance || (this._instance = new this(settings));
+    static Instance() {
+
+        return this._instance || (this._instance = new this());
     }
 
     init() {
@@ -39,7 +37,7 @@ export default class EntityManager {
             element: document.body,
             engine: this._engine,
             options: {
-                background: this._palette.getColourByEnum(Colours.veniceblue).rgb,
+                background: this._colourManager.getColourByEnum(Colours.veniceblue).rgb,
                 wireframes: false
             }
         });
@@ -55,19 +53,28 @@ export default class EntityManager {
         return Matter.World.allBodies(this._engine.world);
     }
 
-    addEntities(entities: Matter.Body[]) {
+    addEntities(entities: Entity[]) {
 
-        Matter.World.add(this._engine.world, entities);
+        let bodies = entities.map((entity: Entity) => {
+
+            return (entity.components[SystemType.RENDER] as DisplayComponent).body;
+        });
+
+        Matter.World.add(this._engine.world, bodies);
     }
 
-    addEntity(entity: Matter.Body) {
+    addEntity(entity: Entity) {
 
-        Matter.World.addBody(this._engine.world, entity);
+        let body = (entity.components[SystemType[SystemType.RENDER]] as DisplayComponent).body;
+
+        Matter.World.addBody(this._engine.world, body);
     }
 
-    removeEntity(entity: Matter.Body) {
+    removeEntity(entity: Entity) {
 
-        Matter.World.remove(this._engine.world, entity);
+        let body = (entity.components[SystemType[SystemType.RENDER]] as DisplayComponent).body;
+
+        Matter.World.remove(this._engine.world, body);
     }
 
     update(delta: number) {

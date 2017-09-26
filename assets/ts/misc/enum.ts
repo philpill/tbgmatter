@@ -1,6 +1,7 @@
 enum SystemType {
 
-    RENDER
+    RENDER,
+    CONTROL
 }
 
 enum Colours {

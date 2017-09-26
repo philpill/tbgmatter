@@ -1,5 +1,5 @@
 import * as Matter from 'matter-js';
-import { ISettings } from '../misc/iSettings';
+import settings from '../misc/settings';
 import { ITiledLevel } from '../misc/iTiled';
 
 import Block from '../prefabs/block';
@@ -14,24 +14,22 @@ export default class LevelManager {
 
     private static _instance: LevelManager;
 
-    private _settings: ISettings;
     private _currentLevel: number;
     private _entityManager: EntityManager;
 
-    private constructor(settings: ISettings) {
+    private constructor() {
 
-        this._settings = settings;
-        this._entityManager = EntityManager.Instance(this._settings);
+        this._entityManager = EntityManager.Instance();
     }
 
-    static Instance(settings: ISettings)
+    static Instance()
     {
-        return this._instance || (this._instance = new this(settings));
+        return this._instance || (this._instance = new this());
     }
 
-    getPlayer(): Matter.Body {
+    getPlayer() {
 
-        let entity = Player(this._settings, {
+        let entity = new Player({
             position: {
                 x: 9,
                 y: 17
@@ -47,32 +45,39 @@ export default class LevelManager {
 
         console.log(data);
 
+        let entityData = data.layers[0].data;
 
-        this._entityManager.addEntity(Background(this._settings, {
+        let height = data.layers[0].height;
+
+        let width = data.layers[0].width;
+
+        for (let i = 0, j = entityData.length; i < j; i++) {
+
+            if (entityData[i]) {
+
+                let x = i % width * settings.tile.width;
+                let y = Math.floor(i/width) * settings.tile.width;
+
+                this._entityManager.addEntity(new Block({
+                    position: {
+                        x: x, y: y
+                    }
+                }));
+            }
+        }
+
+        this._entityManager.addEntity(new Background({
             position: {
                 x: 10, y: 100
             }
         }));
 
-        this._entityManager.addEntity(Background(this._settings, {
+        this._entityManager.addEntity(new Background({
             position: {
                 x: 12, y: 190
             }
         }));
 
         this._entityManager.addEntity(this.getPlayer());
-
-
-        this._entityManager.addEntity(Block(this._settings, {
-            position: {
-                x: 50, y: 50
-            }
-        }));
-
-        this._entityManager.addEntity(Block(this._settings, {
-            position: {
-                x: 8, y: 200
-            }
-        }));
     }
 }

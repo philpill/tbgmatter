@@ -1,15 +1,12 @@
-import { ISettings } from '../misc/iSettings';
+import settings from '../misc/settings';
 
 declare var createjs: any; // until they sort out their @types
 
 export default class ResourceManager {
 
-    private _settings: ISettings;
     private _preload: any;
 
-    constructor(settings: ISettings) {
-
-        this._settings = settings;
+    constructor() {
 
         this._preload = new createjs.LoadQueue(true);
     }

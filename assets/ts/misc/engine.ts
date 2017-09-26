@@ -1,18 +1,22 @@
-import { ISettings } from './iSettings';
+import settings from '../misc/settings';
 import RenderSystem from '../systems/render';
+import ControlSystem from '../systems/control';
 
 export default class Engine {
 
     _renderSystem: RenderSystem;
+    _controlSystem: ControlSystem;
 
-    constructor(settings: ISettings) {
+    constructor() {
 
-        this._renderSystem = new RenderSystem(settings);
+        this._renderSystem = new RenderSystem();
+        this._controlSystem = new ControlSystem();
     }
 
     init() {
 
         this._renderSystem.init();
+        this._controlSystem.init();
 
         this.update();
     }
@@ -28,6 +32,8 @@ export default class Engine {
         requestAnimationFrame(() => {
 
             this._renderSystem.update(delta);
+
+            this._controlSystem.update(delta, []);
 
             this.update(now);
         });
