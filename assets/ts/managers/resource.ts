@@ -2,13 +2,22 @@ import settings from '../misc/settings';
 
 declare var createjs: any; // until they sort out their @types
 
+let instance = null;
+
 export default class ResourceManager {
+
+    private static _instance: ResourceManager;
 
     private _preload: any;
 
-    constructor() {
+    private constructor() {
 
         this._preload = new createjs.LoadQueue(true);
+    }
+
+    static Instance()
+    {
+        return this._instance || (this._instance = new this());
     }
 
     async load(): Promise<any> {

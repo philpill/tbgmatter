@@ -27,57 +27,50 @@ export default class LevelManager {
         return this._instance || (this._instance = new this());
     }
 
-    getPlayer() {
+    // loadLevel(data: ITiledLevel) {
 
-        let entity = new Player({
-            position: {
-                x: 9,
-                y: 17
-            }
-        });
+    //     console.log('loadLevel');
 
-        return entity;
-    }
+    //     console.log(data);
 
-    loadLevel(data: ITiledLevel) {
+    //     let entityData = data.layers[0].data;
 
-        console.log('loadLevel');
+    //     let height = data.layers[0].height;
 
-        console.log(data);
+    //     let width = data.layers[0].width;
 
-        let entityData = data.layers[0].data;
+    //     for (let i = 0, j = entityData.length; i < j; i++) {
 
-        let height = data.layers[0].height;
+    //         if (entityData[i]) {
 
-        let width = data.layers[0].width;
+    //             let x = i % width * settings.tile.width;
+    //             let y = Math.floor(i/width) * settings.tile.width;
 
-        for (let i = 0, j = entityData.length; i < j; i++) {
+    //             this._entityManager.addEntity(new Block({
+    //                 position: {
+    //                     x: x, y: y
+    //                 }
+    //             }));
+    //         }
+    //     }
 
-            if (entityData[i]) {
+    //     this._entityManager.addEntity(new Background({
+    //         position: {
+    //             x: 10, y: 100
+    //         }
+    //     }));
 
-                let x = i % width * settings.tile.width;
-                let y = Math.floor(i/width) * settings.tile.width;
+    //     this._entityManager.addEntity(new Background({
+    //         position: {
+    //             x: 12, y: 190
+    //         }
+    //     }));
 
-                this._entityManager.addEntity(new Block({
-                    position: {
-                        x: x, y: y
-                    }
-                }));
-            }
-        }
-
-        this._entityManager.addEntity(new Background({
-            position: {
-                x: 10, y: 100
-            }
-        }));
-
-        this._entityManager.addEntity(new Background({
-            position: {
-                x: 12, y: 190
-            }
-        }));
-
-        this._entityManager.addEntity(this.getPlayer());
-    }
+    //     this._entityManager.addEntity(new Player({
+    //         position: {
+    //             x: 9,
+    //             y: 17
+    //         }
+    //     }));
+    // }
 }

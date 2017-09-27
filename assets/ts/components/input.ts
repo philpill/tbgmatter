@@ -7,7 +7,7 @@ import InputManager from '../managers/input';
 
 export default class InputComponent implements IComponent {
 
-    class: SystemType;
+    type: SystemType;
 
     _inputManager: InputManager;
 
@@ -19,7 +19,7 @@ export default class InputComponent implements IComponent {
 
     constructor() {
 
-        this.class = SystemType.CONTROL;
+        this.type = SystemType.CONTROL;
 
         this._inputManager = InputManager.Instance();
 

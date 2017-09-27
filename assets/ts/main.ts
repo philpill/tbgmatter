@@ -20,7 +20,7 @@ export default class Main {
 
         this._engine = new Engine();
 
-        this._resourceManager = new ResourceManager();
+        this._resourceManager = ResourceManager.Instance();
         this._levelManager = LevelManager.Instance();
         this._entityManager = EntityManager.Instance();
         this._inputManager = InputManager.Instance();
@@ -29,10 +29,8 @@ export default class Main {
     async init() {
 
         await this._resourceManager.load();
-        let data = this._resourceManager.getLevelData(0);
-        this._engine.init();
 
-        this._levelManager.loadLevel(data);
+        this._engine.init();
     }
 }
 

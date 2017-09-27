@@ -15,16 +15,16 @@ export default class Entity {
     }
 
     addComponent(component: IComponent) {
-        this.components[SystemType[component.class]] = component;
+        this.components[SystemType[component.type]] = component;
     }
 
     addComponents(...components: IComponent[]) {
         components.map(this.addComponent.bind(this));
     }
 
-    removeComponent(componentClass: string) {
-        this.components[SystemType[componentClass]].destroy();
-        this.components[SystemType[componentClass]] = null;
+    removeComponent(componentType: string) {
+        this.components[SystemType[componentType]].destroy();
+        this.components[SystemType[componentType]] = null;
     }
 
     destroy() {

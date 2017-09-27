@@ -7,11 +7,11 @@ export default class DisplayComponent implements IComponent {
 
     body: Matter.Body;
 
-    class: SystemType;
+    type: SystemType;
 
     constructor(options: Matter.IBodyDefinition) {
 
-        this.class = SystemType.RENDER;
+        this.type = SystemType.RENDER;
 
         this.body = Matter.Body.create(options);
     }
