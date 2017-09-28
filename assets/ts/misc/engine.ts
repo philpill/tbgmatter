@@ -1,21 +1,27 @@
 import settings from '../misc/settings';
+import Node from '../misc/node';
+import { SystemType } from '../misc/enum';
+
+import NodeManager from '../managers/node';
+
 import RenderSystem from '../systems/render';
 import ControlSystem from '../systems/control';
 import LevelSystem from '../systems/level';
 
-import Node from '../misc/node';
 
 export default class Engine {
 
     _renderSystem: RenderSystem;
     _controlSystem: ControlSystem;
     _levelSystem: LevelSystem;
+    _nodeManager: NodeManager;
 
     constructor() {
 
         this._renderSystem = new RenderSystem();
         this._controlSystem = new ControlSystem();
         this._levelSystem = new LevelSystem();
+        this._nodeManager = NodeManager.Instance();
     }
 
     init() {
@@ -39,9 +45,9 @@ export default class Engine {
 
             this._renderSystem.update(delta);
 
-            this._controlSystem.update(delta, []);
+            this._controlSystem.update(delta, this._nodeManager.getNodesByType(SystemType.CONTROL));
 
-            this._levelSystem.update([]);
+            this._levelSystem.update(this._nodeManager.getNodesByType(SystemType.LEVEL));
 
             this.update(now);
         });

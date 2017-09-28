@@ -71,6 +71,13 @@ export default class EntityManager {
         Matter.World.addBody(this._engine.world, body);
     }
 
+    removeAllEntities() {
+
+        Matter.World.clear(this._engine.world, false);
+
+        this._entities = [];
+    }
+
     removeEntityById(id: string): Entity {
 
         let entity = this._entities.find((entity: Entity) => {

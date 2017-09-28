@@ -3,9 +3,11 @@ import '../misc/augment';
 import settings from '../misc/settings';
 import { SystemType } from '../misc/enum';
 import Entity from '../misc/entity';
+import Node from '../misc/node';
 import EntityManager from '../managers/entity';
 import ResourceManager from '../managers/resource';
 import LevelManager from '../managers/level';
+import NodeManager from '../managers/node';
 import { ITiledLevel } from '../misc/iTiled';
 
 import Block from '../prefabs/block';
@@ -18,6 +20,7 @@ export default class LevelSystem {
     private _entityManager: EntityManager;
     private _levelManager: LevelManager;
     private _resourceManager: ResourceManager;
+    private _nodeManager: NodeManager
 
     private _currentLevel: number;
 
@@ -29,6 +32,7 @@ export default class LevelSystem {
         this._entityManager = EntityManager.Instance();
         this._levelManager = LevelManager.Instance();
         this._resourceManager = ResourceManager.Instance();
+        this._nodeManager = NodeManager.Instance();
         this._currentLevel = 0;
         this._isLoaded = false;
     }
@@ -88,11 +92,19 @@ export default class LevelSystem {
     addEntities(entities: Entity[]) {
 
         this._entityManager.addEntities(entities);
+
+        this._nodeManager.createNewNodes(entities);
     }
 
     loadLevel() {
 
         this._isLoaded = true;
+
+        // clear current nodes
+        // clear current entities
+        // get level data
+        // create entities
+        // create nodes
 
         let data = this.getLevelData(this._currentLevel);
 
