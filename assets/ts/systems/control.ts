@@ -2,7 +2,6 @@ import * as Matter from 'matter-js';
 import Node from '../misc/node';
 import DisplayComponent from '../components/display';
 import InputComponent from '../components/input';
-import '../misc/augment';
 import settings from '../misc/settings';
 import { SystemType } from '../misc/enum';
 

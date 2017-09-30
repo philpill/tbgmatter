@@ -11,6 +11,7 @@ export default class Entity {
     id: string;
     isActive: boolean;
     components: NodeComponents;
+    hasFocus: boolean;
 
     constructor() {
 
@@ -63,5 +64,6 @@ export default class Entity {
 
         this.isActive = false;
         this.components = {};
+        this.hasFocus = false;
     }
 }

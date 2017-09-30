@@ -1,5 +1,4 @@
 import * as Matter from 'matter-js';
-import '../misc/augment';
 import settings from '../misc/settings';
 import { SystemType } from '../misc/enum';
 import Entity from '../misc/entity';

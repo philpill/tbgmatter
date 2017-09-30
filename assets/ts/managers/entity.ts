@@ -7,7 +7,6 @@ import Block from '../prefabs/block';
 import DisplayComponent from '../components/display';
 
 import ColourManager from '../managers/colour';
-import '../misc/augment';
 
 import { SystemType, Colours } from '../misc/enum';
 
@@ -20,6 +19,8 @@ export default class EntityManager {
     private _colourManager: ColourManager;
 
     private _entities: Entity[];
+
+    private _focusBody: Matter.Body;
 
     private constructor() {
 
@@ -54,8 +55,6 @@ export default class EntityManager {
 
         Matter.Engine.run(this._engine);
         Matter.Render.run(this._render);
-
-        // Matter.Render.lookAt(render, objects
     }
 
     getEntities(): Entity[] {
@@ -73,6 +72,11 @@ export default class EntityManager {
         this._entities.push(entity);
 
         let body = entity.components.display.body;
+
+        if (entity.hasFocus) {
+
+            this._focusBody = body;
+        }
 
         Matter.World.addBody(this._engine.world, body);
     }
@@ -104,6 +108,13 @@ export default class EntityManager {
     }
 
     update(delta: number) {
+
+        if (this._focusBody) {
+
+            let position = { x: this._focusBody.position.x, y: this._focusBody.position.y };
+
+            Matter.Bounds.shift(this._render.bounds, position);
+        }
 
         Matter.Engine.update(this._engine, delta);
     }

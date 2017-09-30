@@ -12,6 +12,8 @@ export default class Player extends Entity {
 
         super();
 
+        this.hasFocus = true;
+
         let colourManager = ColourManager.Instance();
 
         let display = new DisplayComponent(Matter.Common.extend(options, {
