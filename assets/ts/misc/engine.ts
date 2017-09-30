@@ -47,8 +47,6 @@ export default class Engine {
 
             let controlNodes = this._nodeManager.getNodesByType(SystemType.CONTROL);
 
-            // console.log(controlNodes);
-
             this._controlSystem.update(delta, controlNodes);
 
             this._levelSystem.update(this._nodeManager.getNodesByType(SystemType.LEVEL));

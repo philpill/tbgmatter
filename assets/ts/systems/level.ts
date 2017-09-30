@@ -100,6 +100,10 @@ export default class LevelSystem {
 
         this._isLoaded = true;
 
+        this._nodeManager.removeAllNodes();
+
+        this._entityManager.removeAllEntities();
+
         // clear current nodes
         // clear current entities
         // get level data

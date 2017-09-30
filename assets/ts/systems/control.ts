@@ -25,8 +25,6 @@ export default class ControlSystem {
 
     update(delta: number, nodes: Node[]) {
 
-        // console.log(nodes);
-
         nodes.map((node: Node) => {
 
             let display = node.components.display;
