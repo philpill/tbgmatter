@@ -30,7 +30,17 @@ export default class ControlSystem {
             let display = node.components.display;
             let input = node.components.input;
 
-            Matter.Body.setVelocity(display.body, { x: 1, y: 0 });
+            let x = 0;
+
+            if (input.isRight) {
+                x = 2.5;
+            }
+
+            if (input.isLeft) {
+                x = -2.5;
+            }
+
+            Matter.Body.setVelocity(display.body, { x: x, y: display.body.velocity.y });
 
         });
     }
