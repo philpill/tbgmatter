@@ -14,15 +14,18 @@ export default class Node {
 
     entityId: string;
     type: SystemType;
+    components: NodeComponents;
 
     constructor(entityId: string, type: SystemType, components: NodeComponents) {
 
         this.entityId = entityId;
         this.type = type;
+        this.components = components;
     }
 
     destroy() {
 
+        this.components = null;
         this.entityId = null;
         this.type = null;
     }

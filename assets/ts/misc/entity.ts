@@ -1,13 +1,16 @@
 import settings from '../misc/settings';
 import { IComponent } from '../misc/iComponent';
+import InputComponent from '../components/input';
+import DisplayComponent from '../components/display';
 import * as Matter from 'matter-js';
 import { SystemType, Colours } from '../misc/enum';
+import { NodeComponents } from './node';
 
 export default class Entity {
 
     id: string;
     isActive: boolean;
-    components: { [id: string] : IComponent; };
+    components: NodeComponents;
 
     constructor() {
 
@@ -29,24 +32,36 @@ export default class Entity {
     }
 
     addComponent(component: IComponent) {
-        this.components[SystemType[component.type]] = component;
+        switch(component.type) {
+            case SystemType.CONTROL:
+                this.components.input = component as InputComponent;
+                break;
+            case SystemType.RENDER:
+                this.components.display = component as DisplayComponent;
+                break;
+        }
     }
 
     addComponents(...components: IComponent[]) {
         components.map(this.addComponent.bind(this));
     }
 
-    removeComponent(componentType: string) {
-        this.components[SystemType[componentType]].destroy();
-        this.components[SystemType[componentType]] = null;
+    removeComponent(componentType: SystemType) {
+        switch(componentType) {
+            case SystemType.CONTROL:
+                this.components.input.destroy();
+                this.components.input = null;
+                break;
+            case SystemType.RENDER:
+                this.components.display.destroy();
+                this.components.display = null;
+                break;
+        }
     }
 
     destroy() {
-        console.log('destroy');
+
         this.isActive = false;
-        Object.keys(this.components).map((component) => {
-            this.removeComponent(component);
-        });
         this.components = {};
     }
 }

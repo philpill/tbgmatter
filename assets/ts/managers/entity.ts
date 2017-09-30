@@ -43,6 +43,10 @@ export default class EntityManager {
             options: {
                 background: this._colourManager.getColourByEnum(Colours.veniceblue).rgb,
                 wireframes: false
+            },
+            bounds: {
+                min: { x: 0, y: 0 },
+                max: { x: 640, y: 480 }
             }
         });
 
@@ -50,6 +54,8 @@ export default class EntityManager {
 
         Matter.Engine.run(this._engine);
         Matter.Render.run(this._render);
+
+        // Matter.Render.lookAt(render, objects
     }
 
     getEntities(): Entity[] {
@@ -66,7 +72,7 @@ export default class EntityManager {
 
         this._entities.push(entity);
 
-        let body = (entity.components[SystemType[SystemType.RENDER]] as DisplayComponent).body;
+        let body = entity.components.display.body;
 
         Matter.World.addBody(this._engine.world, body);
     }
@@ -85,7 +91,7 @@ export default class EntityManager {
             return entity.id === id;
         });
 
-        let body = (entity.components[SystemType[SystemType.RENDER]] as DisplayComponent).body;
+        let body = entity.components.display.body;
 
         Matter.World.remove(this._engine.world, body);
 

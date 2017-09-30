@@ -25,8 +25,13 @@ export default class NodeManager {
 
         this.typedNodes = {};
 
-        for (var type in SystemType) {
-            this.typedNodes[SystemType[type]] = [];
+        const objValues = Object.keys(SystemType).map(k => SystemType[k]);
+
+        const values = objValues.filter(v => typeof v === 'number') as number[];
+
+        for (var val in values) {
+
+            this.typedNodes[val] = [];
         }
     }
 
@@ -44,7 +49,7 @@ export default class NodeManager {
 
         let nodes = [];
 
-        this.getNodesByComponents(entity.id, entity.components);
+        nodes.push(...this.getNodesByComponents(entity.id, entity.components));
 
         return nodes;
     }
@@ -70,7 +75,7 @@ export default class NodeManager {
 
         let nodes = [];
 
-        if (components.input && components.display) {
+        if (components[SystemType.CONTROL] && components[SystemType.RENDER]) {
 
             nodes.push(new Node(entityId, SystemType.CONTROL, components));
         }
