@@ -41,6 +41,14 @@ export default class LevelSystem {
         return this._resourceManager.getLevelData(level);
     }
 
+    getMapDimensionsByTileData(data: ITiledLevel) {
+
+        let height = data.tileheight * data.height;
+        let width = data.tilewidth * data.width;
+
+        return { height: height, width: width};
+    }
+
     getEntitiesByTileData(data: ITiledLevel): Entity[] {
 
         let entities: Entity[] = [];
@@ -112,6 +120,12 @@ export default class LevelSystem {
         let data = this.getLevelData(this._currentLevel);
 
         let entities = this.getEntitiesByTileData(data);
+
+        let dimensions = this.getMapDimensionsByTileData(data);
+
+        console.log(dimensions);
+
+        this._entityManager.setMapDimensions(dimensions.height, dimensions.width);
 
         this.addEntities(entities);
     }
