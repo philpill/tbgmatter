@@ -29,7 +29,8 @@ export default class ControlSystem {
             let display = node.components.display;
             let input = node.components.input;
 
-            let x = 0;
+            let x = display.body.velocity.x;
+            let y = display.body.velocity.y;
 
             if (input.isRight) {
                 x = 2.5;
@@ -39,7 +40,11 @@ export default class ControlSystem {
                 x = -2.5;
             }
 
-            Matter.Body.setVelocity(display.body, { x: x, y: display.body.velocity.y });
+            if ((input.isJump || input.isUp) && y === 0) {
+                y = -5;
+            }
+
+            Matter.Body.setVelocity(display.body, { x: x, y: y });
 
         });
     }
