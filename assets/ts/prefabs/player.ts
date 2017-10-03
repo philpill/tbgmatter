@@ -29,7 +29,7 @@ export default class Player extends Entity {
             inertia: Infinity,
             collisionFilter: {
                 mask: 0x0001
-            },
+            }
         }));
 
         let input = new InputComponent();

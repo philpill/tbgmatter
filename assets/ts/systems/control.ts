@@ -32,17 +32,24 @@ export default class ControlSystem {
             let x = display.body.velocity.x;
             let y = display.body.velocity.y;
 
+            let velocityX = 2.5;
+            let airVelocityX = 1.2;
+
             if (input.isRight) {
-                x = 2.5;
+
+                x = y === 0 ? velocityX : airVelocityX;
             }
 
             if (input.isLeft) {
-                x = -2.5;
+
+                x = y === 0 ? -velocityX : -airVelocityX;
             }
 
             if ((input.isJump || input.isUp) && y === 0) {
                 y = -5;
             }
+
+            Matter.Body.set(display.body, { friction: y === 0 ? 0.1 : 0 });
 
             Matter.Body.setVelocity(display.body, { x: x, y: y });
 
