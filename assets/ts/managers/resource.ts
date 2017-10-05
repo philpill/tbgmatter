@@ -22,9 +22,9 @@ export default class ResourceManager {
 
     async load(): Promise<any> {
 
-        this._preload.on('fileload', (e) => {
-            console.log(e);
-        }, this);
+        // this._preload.on('fileload', (e) => {
+        //     console.log(e);
+        // }, this);
 
         this._preload.loadManifest('/static/data/manifest/maps.json');
         this._preload.loadManifest('/static/data/manifest/wav.json');
@@ -42,6 +42,17 @@ export default class ResourceManager {
         let item = this._preload.getResult(items[0].result.manifest[index].id);
 
         return item;
+    }
+
+    getAudioData(resourceId: string) {
+
+        let items = this._preload.getItems(true);
+
+        let results = items[1].result.manifest.filter((item) => {
+            return item.id === resourceId;
+        });
+
+        return results.length ? results[0].src : null;
     }
 }
 

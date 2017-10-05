@@ -123,8 +123,6 @@ export default class LevelSystem {
 
         let dimensions = this.getMapDimensionsByTileData(data);
 
-        console.log(dimensions);
-
         this._entityManager.setMapDimensions(dimensions.height, dimensions.width);
 
         this.addEntities(entities);

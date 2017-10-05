@@ -6,16 +6,19 @@ import settings from '../misc/settings';
 import { SystemType } from '../misc/enum';
 
 import EntityManager from '../managers/entity';
+import AudioManager from '../managers/audio';
 
 export default class ControlSystem {
 
     private _systemType: SystemType;
     private _entityManager: EntityManager;
+    private _audioManager: AudioManager;
 
     constructor() {
 
         this._systemType = SystemType.CONTROL;
         this._entityManager = EntityManager.Instance();
+        this._audioManager = AudioManager.Instance();
     }
 
     init() {
@@ -46,6 +49,8 @@ export default class ControlSystem {
             }
 
             if ((input.isJump || input.isUp) && y === 0) {
+
+                this._audioManager.play('audio-hup');
                 y = -5;
             }
 
