@@ -25,7 +25,7 @@ export default class ControlSystem {
 
     }
 
-    update(delta: number, nodes: Node[]) {
+    update(nodes: Node[]) {
 
         nodes.map((node: Node) => {
 
@@ -54,9 +54,12 @@ export default class ControlSystem {
                 y = -5;
             }
 
-            Matter.Body.set(display.body, { friction: y === 0 ? 0.1 : 0 });
+            let friction = y === 0 ? 0.1 : 0;
 
-            Matter.Body.setVelocity(display.body, { x: x, y: y });
+            Matter.Body.set(display.body, {
+                friction: friction,
+                velocity: { x: x, y: y }
+            });
 
         });
     }

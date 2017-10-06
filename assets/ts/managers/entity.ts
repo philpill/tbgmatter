@@ -21,8 +21,6 @@ export default class EntityManager {
     private _mapHeight: number;
     private _mapWidth: number;
 
-    private _zoom: number;
-
     private constructor() {
 
         this._colourManager = ColourManager.Instance();
@@ -44,15 +42,15 @@ export default class EntityManager {
             engine: this._engine,
             options: {
                 background: this._colourManager.getColourByEnum(Colours.veniceblue).rgb,
-                wireframes: false
+                wireframes: false,
+                height: 480,
+                width: 640
             },
             bounds: {
                 min: { x: 0, y: 0 },
                 max: { x: 640, y: 480 } // config this
             }
         });
-
-        this._zoom = this._render.canvas.width/640;
 
         Matter.World.add(this._engine.world, []);
 
@@ -93,8 +91,8 @@ export default class EntityManager {
 
     setMapDimensions(height: number, width: number) {
 
-        this._mapHeight = height * this._zoom;
-        this._mapWidth = width * this._zoom;
+        this._mapHeight = height;
+        this._mapWidth = width;
     }
 
     removeEntityById(id: string): Entity {
@@ -143,6 +141,15 @@ export default class EntityManager {
 
         focusX = bodyX + screenWidth/2 > mapWidth ? mapWidth - screenWidth : focusX;
 
+        // console.log('-----------------------');
+
+        // console.log(bodyX);
+
+        // console.log(mapWidth); // 720
+        // console.log(screenWidth); // 640
+
+        // console.log(focusX); // 80
+
         return focusX;
     }
 
@@ -152,9 +159,9 @@ export default class EntityManager {
 
         if (this._focusBody) {
 
-            let focusX = this._getFocusX(this._focusBody.position.x * this._zoom);
+            let focusX = this._getFocusX(this._focusBody.position.x);
 
-            let focusY = this._getFocusY(this._focusBody.position.y * this._zoom);
+            let focusY = this._getFocusY(this._focusBody.position.y);
 
             let position = { x: focusX, y: focusY };
 
