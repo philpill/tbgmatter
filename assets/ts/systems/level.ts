@@ -1,13 +1,13 @@
 import * as Matter from 'matter-js';
 import settings from '../misc/settings';
-import { SystemType } from '../misc/enum';
+import { SystemType, EntityType } from '../misc/enum';
 import Entity from '../misc/entity';
 import Node from '../misc/node';
 import EntityManager from '../managers/entity';
 import ResourceManager from '../managers/resource';
 import LevelManager from '../managers/level';
 import NodeManager from '../managers/node';
-import { ITiledLevel } from '../misc/iTiled';
+import { ITiledLevel, ILayer } from '../misc/iTiled';
 
 import Boundary from '../prefabs/boundary';
 import Block from '../prefabs/block';
@@ -58,8 +58,6 @@ export default class LevelSystem {
 
         let entities: Entity[] = [];
 
-        console.log(width);
-
         entities.push(new Boundary({
             position: {
                 x: -1, y: -100
@@ -100,51 +98,70 @@ export default class LevelSystem {
 
     }
 
-    getEntitiesByTileData(data: ITiledLevel): Entity[] {
+    getPositionFunc(layerData: ILayer): Function {
+
+        return (index: number) => {
+
+            let height = layerData.height;
+
+            let width = layerData.width;
+
+            let tileWidth = settings.tile.width;
+
+            let offset = tileWidth/2;
+
+            return {
+                x: index % width * tileWidth + offset,
+                y: Math.floor(index/width) * tileWidth + offset
+            };
+        };
+    }
+
+    getEntityFunc(entityType: number, layer: number) {
+
+        let entityConstructor;
+
+        if (layer === 0) {
+            entityConstructor = Block;
+        }
+
+        if (layer === 1) {
+            entityConstructor = Background;
+        }
+
+        return entityConstructor;
+    }
+
+    getEntitiesByTileData(data: ITiledLevel, layer: number): Entity[] {
 
         let entities: Entity[] = [];
 
-        let entityData = data.layers[0].data;
+        let entityData = data.layers[layer].data;
 
-        let height = data.layers[0].height;
-
-        let width = data.layers[0].width;
+        let getPosition = this.getPositionFunc(data.layers[layer]);
 
         for (let i = 0, j = entityData.length; i < j; i++) {
 
             if (entityData[i]) {
 
-                let x = i % width * settings.tile.width + settings.tile.width/2;
-                let y = Math.floor(i/width) * settings.tile.width + settings.tile.width/2;
+                let entityFunc = this.getEntityFunc(entityData[i], layer);
 
-                entities.push(new Block({
-                    position: {
-                        x: x, y: y
-                    }
+                entities.push(new entityFunc({
+                    position: getPosition(i)
                 }));
             }
         }
 
-        entities.push(new Background({
-            position: {
-                x: 10, y: 100
-            }
-        }));
+        return entities;
+    }
 
-        entities.push(new Background({
-            position: {
-                x: 12, y: 190
-            }
-        }));
-
-        entities.push(new Player({
+    getPlayer(): Entity {
+        return new Player({
             position: {
                 x: 9,
                 y: 17
             }
-        }));
-
-        return entities;
+        });
     }
 
     addEntities(entities: Entity[]) {
@@ -170,13 +187,15 @@ export default class LevelSystem {
 
         let data = this.getLevelData(this._currentLevel);
 
-        let entities = this.getEntitiesByTileData(data);
+        this.addEntities(this.getEntitiesByTileData(data, 0));
+        this.addEntities(this.getEntitiesByTileData(data, 1));
+        // this.addEntities(this.getEntitiesByTileData(data, 2));
+
+        this.addEntities([this.getPlayer()]);
 
         let dimensions = this.getMapDimensionsByTileData(data);
 
         this._entityManager.setMapDimensions(dimensions.height, dimensions.width);
-
-        this.addEntities(entities);
 
         let boundaries = this.createMapBoundaries(dimensions);
 

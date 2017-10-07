@@ -5,6 +5,13 @@ enum SystemType {
     LEVEL
 }
 
+enum EntityType {
+
+    BLOCK1,
+    BG1,
+    TRIGGER1
+}
+
 enum Colours {
 
     black,
@@ -41,4 +48,4 @@ enum Colours {
     stinger,
 }
 
-export { SystemType, Colours };
+export { EntityType, SystemType, Colours };
