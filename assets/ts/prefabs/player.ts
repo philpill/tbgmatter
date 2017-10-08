@@ -14,6 +14,8 @@ export default class Player extends Entity {
     airVelocityX: number;
     velocityY: number;
 
+    audioManager: AudioManager;
+
     constructor(options: Matter.IBodyDefinition) {
 
         super();
@@ -24,6 +26,7 @@ export default class Player extends Entity {
         this.velocityY = -5;
 
         let colourManager = ColourManager.Instance();
+        this.audioManager = AudioManager.Instance();
 
         let audio = new AudioComponent({});
 
@@ -94,8 +97,7 @@ export default class Player extends Entity {
         let y = body.velocity.y;
 
         if (y === 0) {
-            // bit hacky - shift out
-            AudioManager.Instance().play('audio-hup');
+            this.audioManager.play('audio-hup');
             y = -5;
         }
 

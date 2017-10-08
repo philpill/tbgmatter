@@ -3,6 +3,7 @@ import settings from '../misc/settings';
 import { SystemType, EntityType } from '../misc/enum';
 import Entity from '../misc/entity';
 import Node from '../misc/node';
+import InputManager from '../managers/input';
 import EntityManager from '../managers/entity';
 import ResourceManager from '../managers/resource';
 import LevelManager from '../managers/level';
@@ -17,6 +18,7 @@ import Background from '../prefabs/background';
 export default class LevelSystem {
 
     private _systemType: SystemType;
+    private _inputManager: InputManager;
     private _entityManager: EntityManager;
     private _levelManager: LevelManager;
     private _resourceManager: ResourceManager;
@@ -29,6 +31,7 @@ export default class LevelSystem {
     constructor() {
 
         this._systemType = SystemType.LEVEL;
+        this._inputManager = InputManager.Instance();
         this._entityManager = EntityManager.Instance();
         this._levelManager = LevelManager.Instance();
         this._resourceManager = ResourceManager.Instance();
@@ -176,14 +179,9 @@ export default class LevelSystem {
         this._isLoaded = true;
 
         this._nodeManager.removeAllNodes();
-
         this._entityManager.removeAllEntities();
+        this._inputManager.removeAllHandlers();
 
-        // clear current nodes
-        // clear current entities
-        // get level data
-        // create entities
-        // create nodes
 
         let data = this.getLevelData(this._currentLevel);
 

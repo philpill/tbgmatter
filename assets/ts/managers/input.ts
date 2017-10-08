@@ -4,8 +4,8 @@ export default class InputManager {
 
     private static _instance: InputManager;
 
-    onKeyDownCallback: Function;
-    onKeyUpCallback: Function;
+    onKeyDownHandlers: Function[];
+    onKeyUpHandlers: Function[];
 
     private constructor() {
 
@@ -23,27 +23,32 @@ export default class InputManager {
         window.removeEventListener('keydown', this.onKeyDownHandler);
         window.removeEventListener('keyup', this.onKeyUpHandler);
 
-        this.onKeyDownCallback = null;
-        this.onKeyUpCallback = null;
+        this.onKeyDownHandlers = null;
+        this.onKeyUpHandlers = null;
+    }
+
+    removeAllHandlers() {
+        this.onKeyDownHandlers = [];
+        this.onKeyUpHandlers = [];
     }
 
     onKeyDownHandler(e: KeyboardEvent) {
-        if (this.onKeyDownCallback) {
-            return this.onKeyDownCallback(e);
-        }
+        this.onKeyDownHandlers.map((handler: Function) => {
+            handler(e);
+        });
     }
 
     onKeyUpHandler(e: KeyboardEvent) {
-        if (this.onKeyUpCallback) {
-            return this.onKeyUpCallback(e);
-        }
+        this.onKeyUpHandlers.map((handler: Function) => {
+            handler(e);
+        });
     }
 
     onKeyUp(callback: Function) {
-        this.onKeyUpCallback = callback;
+        this.onKeyUpHandlers.push(callback);
     }
 
     onKeyDown(callback: Function) {
-        this.onKeyDownCallback = callback;
+        this.onKeyDownHandlers.push(callback);
     }
 }
