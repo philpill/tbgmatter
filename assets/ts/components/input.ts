@@ -5,6 +5,14 @@ import settings from '../misc/settings';
 import { SystemType, Colours } from '../misc/enum';
 import InputManager from '../managers/input';
 
+export class IInputHandlers {
+    onUp?: Function;
+    onDown?: Function;
+    onLeft?: Function;
+    onRight?: Function;
+    onReset?: Function;
+}
+
 export default class InputComponent implements IComponent {
 
     type: SystemType;
@@ -17,7 +25,13 @@ export default class InputComponent implements IComponent {
     isRight: boolean;
     isDown: boolean;
 
-    constructor() {
+    onUp: Function;
+    onLeft: Function;
+    onRight: Function;
+
+    onReset: Function;
+
+    constructor(handlers: IInputHandlers) {
 
         this.type = SystemType.CONTROL;
 
@@ -25,6 +39,12 @@ export default class InputComponent implements IComponent {
 
         this._inputManager.onKeyDown(this.onKeyDown.bind(this));
         this._inputManager.onKeyUp(this.onKeyUp.bind(this));
+
+        this.onUp = handlers.onUp;
+        this.onRight = handlers.onRight;
+        this.onLeft = handlers.onLeft;
+
+        this.onReset = handlers.onReset;
     }
 
     onKeyDown(e: KeyboardEvent) {

@@ -32,35 +32,25 @@ export default class ControlSystem {
             let display = node.components.display;
             let input = node.components.input;
 
-            let x = display.body.velocity.x;
-            let y = display.body.velocity.y;
+            if (input.isRight && input.onRight) {
 
-            let velocityX = 2.5;
-            let airVelocityX = 1.2;
-
-            if (input.isRight) {
-
-                x = y === 0 ? velocityX : airVelocityX;
+                input.onRight();
             }
 
-            if (input.isLeft) {
+            if (input.isLeft && input.onLeft) {
 
-                x = y === 0 ? -velocityX : -airVelocityX;
+                input.onLeft();
             }
 
-            if ((input.isJump || input.isUp) && y === 0) {
+            if (input.isUp && input.onUp) {
 
-                this._audioManager.play('audio-hup');
-                y = -5;
+                input.onUp();
             }
 
-            let friction = y === 0 ? 0.1 : 0;
+            if (!input.isLeft && !input.isRight && !input.isUp && input.onReset) {
 
-            Matter.Body.set(display.body, {
-                friction: friction,
-                velocity: { x: x, y: y }
-            });
-
+                input.onReset();
+            }
         });
     }
 }

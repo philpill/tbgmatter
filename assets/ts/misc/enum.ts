@@ -2,7 +2,8 @@ enum SystemType {
 
     RENDER,
     CONTROL,
-    LEVEL
+    LEVEL,
+    AUDIO
 }
 
 enum EntityType {
