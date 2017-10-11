@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
         "lib": ["DOM", "es2017"],
-        "types" : [
-            "matter-js",
-            "mocha"
-        ],
         "target": "ES2017",
-        "sourceMap": true
+        "sourceMap": true,
+        "baseUrl": ".", // This must be specified if "paths" is.
+        "paths": {
+            "*": ["dts/*", "*"]
+        }
     }
 }

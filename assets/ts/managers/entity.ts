@@ -1,4 +1,7 @@
-import * as Matter from 'matter-js';
+
+import { Plugin, Render, World, Engine, Bounds } from 'matter-js';
+
+
 import { ITiledLevel } from '../misc/iTiled';
 import Entity from '../misc/entity';
 import Block from '../prefabs/block';
@@ -35,9 +38,14 @@ export default class EntityManager {
 
     init() {
 
-        this._engine = Matter.Engine.create();
+        Plugin.use({name: 'matter-collision-events', version: '0.1.7', install: () => {
 
-        this._render = Matter.Render.create({
+
+        }});
+
+        this._engine = Engine.create();
+
+        this._render = Render.create({
             element: document.body,
             engine: this._engine,
             options: {
@@ -52,10 +60,10 @@ export default class EntityManager {
             }
         });
 
-        Matter.World.add(this._engine.world, []);
+        World.add(this._engine.world, []);
 
-        Matter.Engine.run(this._engine);
-        Matter.Render.run(this._render);
+        Engine.run(this._engine);
+        Render.run(this._render);
     }
 
     getEntities(): Entity[] {
@@ -79,12 +87,12 @@ export default class EntityManager {
             this._focusBody = body;
         }
 
-        Matter.World.addBody(this._engine.world, body);
+        World.addBody(this._engine.world, body);
     }
 
     removeAllEntities() {
 
-        Matter.World.clear(this._engine.world, false);
+        World.clear(this._engine.world, false);
 
         this._entities = [];
     }
@@ -104,7 +112,7 @@ export default class EntityManager {
 
         let body = entity.components.display.body;
 
-        Matter.World.remove(this._engine.world, body);
+        World.remove(this._engine.world, body);
 
         this._entities = this._entities.filter((entity: Entity) => {
 
@@ -165,9 +173,9 @@ export default class EntityManager {
 
             let position = { x: focusX, y: focusY };
 
-            Matter.Bounds.shift(this._render.bounds, position);
+            Bounds.shift(this._render.bounds, position);
         }
 
-        Matter.Engine.update(this._engine, delta);
+        Engine.update(this._engine, delta);
     }
 }

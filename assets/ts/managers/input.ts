@@ -9,6 +9,9 @@ export default class InputManager {
 
     private constructor() {
 
+        this.onKeyDownHandlers = [];
+        this.onKeyUpHandlers = [];
+
         window.addEventListener('keydown', this.onKeyDownHandler.bind(this), false);
         window.addEventListener('keyup', this.onKeyUpHandler.bind(this), false);
     }

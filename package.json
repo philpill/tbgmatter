@@ -13,7 +13,6 @@
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/howler": "^2.0.2",
-    "@types/matter-js": "^0.9.33",
     "@types/mocha": "^2.2.41",
     "@types/preloadjs": "^0.6.32",
     "chai": "^4.0.2",
@@ -28,6 +27,7 @@
   },
   "dependencies": {
     "howler": "*",
+    "matter-collision-events": "^0.1.7",
     "matter-js": "^0.13.0",
     "preloadjs": "^1.0.1"
   }

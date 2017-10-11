@@ -14,6 +14,7 @@ import Boundary from '../prefabs/boundary';
 import Block from '../prefabs/block';
 import Player from '../prefabs/player';
 import Background from '../prefabs/background';
+import Trigger from '../prefabs/trigger';
 
 export default class LevelSystem {
 
@@ -132,6 +133,10 @@ export default class LevelSystem {
             entityConstructor = Background;
         }
 
+        if (layer === 2) {
+            entityConstructor = Trigger;
+        }
+
         return entityConstructor;
     }
 
@@ -185,9 +190,9 @@ export default class LevelSystem {
 
         let data = this.getLevelData(this._currentLevel);
 
-        this.addEntities(this.getEntitiesByTileData(data, 0));
-        this.addEntities(this.getEntitiesByTileData(data, 1));
-        // this.addEntities(this.getEntitiesByTileData(data, 2));
+        this.addEntities(this.getEntitiesByTileData(data, 0)); // general
+        this.addEntities(this.getEntitiesByTileData(data, 1)); // bg
+        this.addEntities(this.getEntitiesByTileData(data, 2)); // triggers
 
         this.addEntities([this.getPlayer()]);
 
