@@ -4,7 +4,7 @@ import ColourManager from '../managers/colour';
 import DisplayComponent from '../components/display';
 import InputComponent from '../components/input';
 import Entity from '../misc/entity';
-import { Colours } from '../misc/enum';
+import { Colours, EntityType } from '../misc/enum';
 
 export default class Trigger extends Entity {
 
@@ -15,6 +15,7 @@ export default class Trigger extends Entity {
         let colourManager = ColourManager.Instance();
 
         let display = new DisplayComponent(Matter.Common.extend(options, {
+            label: EntityType.TRIGGER1.toString(),
             isStatic: true,
             vertices: [
                 { x: 0, y: 0 },
@@ -23,10 +24,17 @@ export default class Trigger extends Entity {
                 { x: 16, y: 0 }
             ],
             render: {
-                //fillStyle: 'transparent'
                 fillStyle: colourManager.getColourByEnum(Colours.stinger).rgb
             }
         }));
+
+        display.body.onCollide((pair: Matter.IPair) => {
+
+            if (pair.bodyB.label === EntityType.PLAYER1.toString()) {
+
+                console.log('test');
+            }
+        });
 
         this.addComponents(display);
     }

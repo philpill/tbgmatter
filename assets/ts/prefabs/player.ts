@@ -6,7 +6,7 @@ import DisplayComponent from '../components/display';
 import InputComponent from '../components/input';
 import AudioComponent from '../components/audio';
 import Entity from '../misc/entity';
-import { Colours } from '../misc/enum';
+import { Colours, EntityType } from '../misc/enum';
 
 export default class Player extends Entity {
 
@@ -31,6 +31,7 @@ export default class Player extends Entity {
         let audio = new AudioComponent({});
 
         let display = new DisplayComponent(Matter.Common.extend(options, {
+            label: EntityType.PLAYER1.toString(),
             vertices: [
                 { x: 0, y: 0 },
                 { x: 0, y: 32 },

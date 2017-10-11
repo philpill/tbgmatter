@@ -1,6 +1,8 @@
+import { MatterCollisionEvents } from '../../../node_modules/matter-collision-events/src/entry';
 
-import { Plugin, Render, World, Engine, Bounds } from 'matter-js';
+import { Matter, Plugin, Render, World, Engine, Bounds } from 'matter-js';
 
+// import * as Matters from 'matter-js';
 
 import { ITiledLevel } from '../misc/iTiled';
 import Entity from '../misc/entity';
@@ -38,10 +40,7 @@ export default class EntityManager {
 
     init() {
 
-        Plugin.use({name: 'matter-collision-events', version: '0.1.7', install: () => {
-
-
-        }});
+        Matter.use(MatterCollisionEvents);
 
         this._engine = Engine.create();
 

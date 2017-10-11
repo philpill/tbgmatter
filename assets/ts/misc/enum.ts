@@ -10,7 +10,9 @@ enum EntityType {
 
     BLOCK1,
     BG1,
-    TRIGGER1
+    TRIGGER1,
+    BOUNDARY1,
+    PLAYER1
 }
 
 enum Colours {

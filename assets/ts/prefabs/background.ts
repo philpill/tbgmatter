@@ -4,7 +4,7 @@ import ColourManager from '../managers/colour';
 import DisplayComponent from '../components/display';
 import InputComponent from '../components/input';
 import Entity from '../misc/entity';
-import { Colours } from '../misc/enum';
+import { Colours, EntityType } from '../misc/enum';
 
 export default class Background extends Entity {
 
@@ -15,6 +15,7 @@ export default class Background extends Entity {
         let colourManager = ColourManager.Instance();
 
         let display = new DisplayComponent(Matter.Common.extend(options, {
+            label: EntityType.BG1.toString(),
             isStatic: true,
             vertices: [
                 { x: 0, y: 0 },

@@ -561,6 +561,11 @@ declare namespace Matter {
     * @class Body
     */
     export class Body {
+
+        onCollide(callback: Function);
+        onCollideEnd(callback: Function);
+        onCollideActive(callback: Function);
+
         /**
          * Applies a force to a body from a given world-space position, including resulting torque.
          * @method applyForce
@@ -902,16 +907,17 @@ declare namespace Matter {
         /**
          * A `Vector` that specifies the current world-space position of the body.
          *
-        * @property position
-        * @type vector
-        * @default { x: 0, y:      */
+         * @property position
+         * @type vector
+         * @default { x: 0, y:
+         */
         position: Vector;
         /**
          * An `Object` that defines the rendering properties to be consumed by the module `Matter.Render`.
-        *
-        * @property render
-        * @type object
-        */
+         *
+         * @property render
+         * @type object
+         */
         render: IBodyRenderOptions;
         /**
          * A `Number` that defines the restitution (elasticity) of the body. The value is always positive and is in the range `(0, 1)`.
@@ -2212,7 +2218,7 @@ declare namespace Matter {
          * @method run
          * @param {engine} engine
          */
-        static run(enige: Engine): void;
+        static run(engine: Engine): void;
 
         /**
          * An instance of a broadphase controller. The default value is a `Matter.Grid` instance created by `Engine.create`.
@@ -2348,13 +2354,14 @@ declare namespace Matter {
     * @class Matter
     */
     export class Matter {
+
         /**
          * The library name.
          * @property name
          * @readOnly
          * @type {String}
          */
-        static name: string;
+        name: string;
 
         /**
          * The library version.
@@ -2362,7 +2369,7 @@ declare namespace Matter {
          * @readOnly
          * @type {String}
          */
-        static version: string;
+        version: string;
 
         /**
          * A list of plugin dependencies to be installed. These are normally set and installed through `Matter.use`.
@@ -2370,7 +2377,7 @@ declare namespace Matter {
          * @property uses
          * @type {Array}
          */
-        static uses: any[];
+        uses: any[];
 
         /**
          * The plugins that have been installed through `Matter.Plugin.install`. Read only.
@@ -2378,9 +2385,9 @@ declare namespace Matter {
          * @readOnly
          * @type {Array}
          */
-        static used: any[];
+        used: any[];
 
-        /*
+        /**
          * Installs the given plugins on the `Matter` namespace.
          * This is a short-hand for `Plugin.use`, see it for more information.
          * Call this function once at the start of your code, with all of the plugins you wish to install as arguments.
