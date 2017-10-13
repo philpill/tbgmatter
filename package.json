@@ -28,7 +28,7 @@
   "dependencies": {
     "howler": "*",
     "matter-collision-events": "^0.1.7",
-    "matter-js": "^0.13.0",
+    "matter-js": "github:philpill/matter-js",
     "preloadjs": "^1.0.1"
   }
 }

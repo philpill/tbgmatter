@@ -1,6 +1,9 @@
 {
     "path": "/static/img/",
     "manifest": [
-
+        {
+            "id" : "img-text-sprite",
+            "src": "text.png"
+        }
     ]
 }

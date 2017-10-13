@@ -14,7 +14,8 @@ export default class NodeManager {
 
         this.typedNodes = {
             input: [],
-            display: []
+            display: [],
+            trigger: []
         };
     }
 
@@ -36,6 +37,11 @@ export default class NodeManager {
 
                 this.typedNodes.display.push(new Node(entity.id, SystemType.RENDER, entity.components));
             }
+
+            if (entity.components.trigger) {
+
+                this.typedNodes.trigger.push(new Node(entity.id, SystemType.TRIGGER, entity.components));
+            }
         });
     }
 
@@ -50,6 +56,9 @@ export default class NodeManager {
             case SystemType.RENDER:
                 nodes = this.typedNodes.display;
                 break;
+            case SystemType.TRIGGER:
+                nodes = this.typedNodes.trigger;
+                break;
         }
 
         return nodes;
@@ -59,5 +68,6 @@ export default class NodeManager {
 
         this.typedNodes.input = [];
         this.typedNodes.display = [];
+        this.typedNodes.trigger = [];
     }
 }

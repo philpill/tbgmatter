@@ -3,11 +3,10 @@ import * as Matter from 'matter-js';
 import ColourManager from '../managers/colour';
 import DisplayComponent from '../components/display';
 import InputComponent from '../components/input';
-import TriggerComponent from '../components/trigger';
 import Entity from '../misc/entity';
 import { Colours, EntityType } from '../misc/enum';
 
-export default class Trigger extends Entity {
+export default class TextEntity extends Entity {
 
     constructor(options: Matter.IBodyDefinition) {
 
@@ -16,7 +15,7 @@ export default class Trigger extends Entity {
         let colourManager = ColourManager.Instance();
 
         let display = new DisplayComponent(Matter.Common.extend(options, {
-            label: EntityType.TRIGGER1.toString(),
+            label: EntityType.TEXT1.toString(),
             isStatic: true,
             vertices: [
                 { x: 0, y: 0 },
@@ -25,21 +24,13 @@ export default class Trigger extends Entity {
                 { x: 16, y: 0 }
             ],
             render: {
-                fillStyle: colourManager.getColourByEnum(Colours.stinger).rgb
+                fillStyle: colourManager.getColourByEnum(Colours.oiledcedar).rgb
+            },
+            collisionFilter: {
+                category: 0x0002
             }
         }));
 
-        display.body.onCollide((pair: Matter.IPair) => {
-
-            if (pair.bodyB.label === EntityType.PLAYER1.toString()) {
-
-                trigger.nextLevel = true;
-                console.log('test');
-            }
-        });
-
-        let trigger = new TriggerComponent();
-
-        this.addComponents(display, trigger);
+        this.addComponents(display);
     }
 }

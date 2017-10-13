@@ -15,6 +15,7 @@ import Block from '../prefabs/block';
 import Player from '../prefabs/player';
 import Background from '../prefabs/background';
 import Trigger from '../prefabs/trigger';
+import TextEntity from '../prefabs/text';
 
 export default class LevelSystem {
 
@@ -37,7 +38,7 @@ export default class LevelSystem {
         this._levelManager = LevelManager.Instance();
         this._resourceManager = ResourceManager.Instance();
         this._nodeManager = NodeManager.Instance();
-        this._currentLevel = 0;
+        this._currentLevel = 1;
         this._isLoaded = false;
     }
 
@@ -137,6 +138,14 @@ export default class LevelSystem {
             entityConstructor = Trigger;
         }
 
+        if (layer === 3) {
+            entityConstructor = TextEntity;
+        }
+
+        if (layer === 4) {
+            entityConstructor = Player;
+        }
+
         return entityConstructor;
     }
 
@@ -144,33 +153,38 @@ export default class LevelSystem {
 
         let entities: Entity[] = [];
 
-        let entityData = data.layers[layer].data;
+        let isVisible = data.layers[layer] ? data.layers[layer].visible : false;
 
-        let getPosition = this.getPositionFunc(data.layers[layer]);
+        if (isVisible) {
 
-        for (let i = 0, j = entityData.length; i < j; i++) {
+            let entityData = data.layers[layer].data;
 
-            if (entityData[i]) {
+            let getPosition = this.getPositionFunc(data.layers[layer]);
 
-                let entityFunc = this.getEntityFunc(entityData[i], layer);
+            for (let i = 0, j = entityData.length; i < j; i++) {
 
-                entities.push(new entityFunc({
-                    position: getPosition(i)
-                }));
+                if (entityData[i]) {
+
+                    let entityFunc = this.getEntityFunc(entityData[i], layer);
+
+                    entities.push(new entityFunc({
+                        position: getPosition(i)
+                    }));
+                }
             }
         }
 
         return entities;
     }
 
-    getPlayer(): Entity {
-        return new Player({
-            position: {
-                x: 9,
-                y: 17
-            }
-        });
-    }
+    // getPlayer(): Entity {
+    //     return new Player({
+    //         position: {
+    //             x: 30,
+    //             y: 17
+    //         }
+    //     });
+    // }
 
     addEntities(entities: Entity[]) {
 
@@ -193,8 +207,10 @@ export default class LevelSystem {
         this.addEntities(this.getEntitiesByTileData(data, 0)); // general
         this.addEntities(this.getEntitiesByTileData(data, 1)); // bg
         this.addEntities(this.getEntitiesByTileData(data, 2)); // triggers
+        this.addEntities(this.getEntitiesByTileData(data, 3)); // text
+        this.addEntities(this.getEntitiesByTileData(data, 4)); // entities
 
-        this.addEntities([this.getPlayer()]);
+        // this.addEntities([this.getPlayer()]);
 
         let dimensions = this.getMapDimensionsByTileData(data);
 
@@ -210,6 +226,17 @@ export default class LevelSystem {
     }
 
     update(nodes: Node[]) {
+
+        nodes.map((node: Node) => {
+
+            let data = node.components.trigger;
+
+            if (data.nextLevel) {
+                console.log('thing');
+                this._currentLevel++;
+                this._isLoaded = false;
+            }
+        });
 
         if (!this._isLoaded) {
 

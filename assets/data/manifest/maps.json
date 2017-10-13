@@ -2,8 +2,16 @@
     "path": "/static/data/maps/",
     "manifest": [
         {
+            "id" : "json-level-title",
+            "src": "title.json"
+        },
+        {
             "id" : "json-level-1",
             "src": "level1.json"
+        },
+        {
+            "id" : "json-level-2",
+            "src": "level2.json"
         }
     ]
 }

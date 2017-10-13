@@ -2,6 +2,7 @@ import settings from '../misc/settings';
 import { IComponent } from '../misc/iComponent';
 import InputComponent from '../components/input';
 import DisplayComponent from '../components/display';
+import TriggerComponent from '../components/trigger';
 import * as Matter from 'matter-js';
 import { SystemType, Colours } from '../misc/enum';
 import { NodeComponents } from './node';
@@ -39,6 +40,9 @@ export default class Entity {
                 break;
             case SystemType.RENDER:
                 this.components.display = component as DisplayComponent;
+                break;
+            case SystemType.TRIGGER:
+                this.components.trigger = component as TriggerComponent;
                 break;
         }
     }

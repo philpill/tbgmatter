@@ -1,5 +1,6 @@
 import Display from '../components/display';
 import Input from '../components/input';
+import Trigger from '../components/trigger';
 
 import settings from '../misc/settings';
 import { SystemType } from '../misc/enum';
@@ -8,6 +9,7 @@ export class NodeComponents {
 
     display?: Display;
     input?: Input;
+    trigger?: Trigger;
 }
 
 export default class Node {

@@ -47,7 +47,7 @@ export default class Engine {
 
             this._controlSystem.update(this._nodeManager.getNodesByType(SystemType.CONTROL));
 
-            this._levelSystem.update(this._nodeManager.getNodesByType(SystemType.LEVEL));
+            this._levelSystem.update(this._nodeManager.getNodesByType(SystemType.TRIGGER));
 
             this.update(now);
         });

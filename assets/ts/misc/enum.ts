@@ -3,7 +3,8 @@ enum SystemType {
     RENDER,
     CONTROL,
     LEVEL,
-    AUDIO
+    AUDIO,
+    TRIGGER
 }
 
 enum EntityType {
@@ -12,7 +13,8 @@ enum EntityType {
     BG1,
     TRIGGER1,
     BOUNDARY1,
-    PLAYER1
+    PLAYER1,
+    TEXT1
 }
 
 enum Colours {
