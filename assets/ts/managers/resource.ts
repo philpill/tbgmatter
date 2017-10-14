@@ -36,6 +36,13 @@ export default class ResourceManager {
         });
     }
 
+    getImagePath(resourceId: string): string {
+
+        let item = this._preload.getItem(resourceId);
+
+        return item.src;
+    }
+
     getLevelData(index: number) {
 
         let items = this._preload.getItems(true);

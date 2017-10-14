@@ -180,6 +180,9 @@ export default class LevelSystem {
 
                     entities.push(new entityFunc({
                         position: getPosition(i)
+                    }, {
+                        // Tiled json is not zero indexed
+                        spriteIndex: entityData[i] - 1
                     }));
                 }
             }

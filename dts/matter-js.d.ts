@@ -539,7 +539,7 @@ declare namespace Matter {
         * @type number
         * @default 1
         */
-        xScale: number;
+        xScale?: number;
 
         /**
          * A `Number` that defines the scaling in the y-axis for the sprite, if any.
@@ -548,7 +548,30 @@ declare namespace Matter {
         * @type number
         * @default 1
         */
-        yScale: number;
+        yScale?: number;
+
+        /**
+         * A `Number` that defines the offset in the x-axis for the sprite, if any.
+         *
+        * @property render.sprite.xScale
+        * @type number
+        * @default 1
+        */
+        xOffset?: number;
+
+        /**
+         * A `Number` that defines the offset in the y-axis for the sprite, if any.
+         *
+        * @property render.sprite.yScale
+        * @type number
+        * @default 1
+        */
+        yOffset?: number;
+
+        sourceHeight?: number;
+        sourceWidth?: number;
+        xSourcePos?: number;
+        ySourcePos?: number;
     }
 
     /**
@@ -3646,9 +3669,9 @@ export class Plugin {
     }
 
     export interface ICollisionFilter {
-        category: number;
-        mask: number;
-        group: number;
+        category?: number;
+        mask?: number;
+        group?: number;
     }
 
     export interface IMousePoint {

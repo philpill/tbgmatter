@@ -20,13 +20,11 @@ export default class InputTrigger extends Entity {
             isStatic: true,
             vertices: [
                 { x: 0, y: 0 },
-                { x: 0, y: 16 },
-                { x: 16, y: 16 },
-                { x: 16, y: 0 }
+                { x: 0, y: 1 },
+                { x: 1, y: 1 },
+                { x: 1, y: 0 }
             ],
-            render: {
-                fillStyle: colourManager.getColourByEnum(Colours.smokeyash).rgb
-            }
+            opacity: 0
         }));
 
         display.body.onCollide((pair: Matter.IPair) => {
@@ -34,7 +32,6 @@ export default class InputTrigger extends Entity {
             if (pair.bodyB.label === EntityType.PLAYER1.toString()) {
 
                 trigger.nextLevel = true;
-                console.log('test');
             }
         });
 
