@@ -15,6 +15,7 @@ import Block from '../prefabs/block';
 import Player from '../prefabs/player';
 import Background from '../prefabs/background';
 import Trigger from '../prefabs/trigger';
+import InputTrigger from '../prefabs/inputTrigger';
 import TextEntity from '../prefabs/text';
 
 export default class LevelSystem {
@@ -38,7 +39,7 @@ export default class LevelSystem {
         this._levelManager = LevelManager.Instance();
         this._resourceManager = ResourceManager.Instance();
         this._nodeManager = NodeManager.Instance();
-        this._currentLevel = 1;
+        this._currentLevel = 0;
         this._isLoaded = false;
     }
 
@@ -124,6 +125,8 @@ export default class LevelSystem {
 
     getEntityFunc(entityType: number, layer: number) {
 
+        // console.log(entityType);
+
         let entityConstructor;
 
         if (layer === 0) {
@@ -135,7 +138,15 @@ export default class LevelSystem {
         }
 
         if (layer === 2) {
-            entityConstructor = Trigger;
+
+            if (entityType === 4) {
+
+                entityConstructor = Trigger;
+
+            } else if (entityType === 43) {
+
+                entityConstructor = InputTrigger;
+            }
         }
 
         if (layer === 3) {
