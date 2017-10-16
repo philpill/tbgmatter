@@ -4,9 +4,6 @@
   <property name="startX" type="int" value="3"/>
   <property name="startY" type="int" value="3"/>
  </properties>
- <tileset firstgid="1" name="general" tilewidth="16" tileheight="16" tilecount="0" columns="10">
-  <image source="../img/bg.png" trans="ff00ff" width="160" height="64"/>
- </tileset>
  <tileset firstgid="1" source="text.tsx"/>
  <layer name="general" width="45" height="30">
   <data encoding="csv">

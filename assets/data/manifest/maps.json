@@ -12,6 +12,10 @@
         {
             "id" : "json-level-2",
             "src": "level2.json"
+        },
+        {
+            "id" : "json-level-death",
+            "src": "death.json"
         }
     ]
 }

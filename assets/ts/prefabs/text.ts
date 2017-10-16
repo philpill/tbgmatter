@@ -9,7 +9,7 @@ import { Colours, EntityType } from '../misc/enum';
 
 export default class TextEntity extends Entity {
 
-    constructor(bodyOpts: Matter.IBodyDefinition, options) {
+    constructor(bodyOpts: Matter.IBodyDefinition, options?) {
 
         super();
 

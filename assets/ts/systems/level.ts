@@ -45,7 +45,7 @@ export default class LevelSystem {
 
     getLevelData(level: number) {
 
-        return this._resourceManager.getLevelData(level);
+        return level < 0 ? this._resourceManager.getFinalLevel() : this._resourceManager.getLevelData(level);
     }
 
     getMapDimensionsByTileData(data: ITiledLevel) {
@@ -86,6 +86,20 @@ export default class LevelSystem {
                 { x: 1, y: 10000 },
                 { x: 0, y: 10000 }
             ]
+        }));
+
+        entities.push(new Boundary({
+            position: {
+                x: -1, y: height
+            },
+            vertices: [
+                { x: 0, y: 0 },
+                { x: 10000, y: 0 },
+                { x: 10000, y: 1 },
+                { x: 0, y: 1 }
+            ]
+        }, {
+            isLethal: true
         }));
 
         entities.push(new Boundary({
@@ -224,8 +238,6 @@ export default class LevelSystem {
         this.addEntities(this.getEntitiesByTileData(data, 3)); // text
         this.addEntities(this.getEntitiesByTileData(data, 4)); // entities
 
-        // this.addEntities([this.getPlayer()]);
-
         let dimensions = this.getMapDimensionsByTileData(data);
 
         this._entityManager.setMapDimensions(dimensions.height, dimensions.width);
@@ -248,6 +260,12 @@ export default class LevelSystem {
             if (data.nextLevel) {
                 console.log('thing');
                 this._currentLevel++;
+                this._isLoaded = false;
+            }
+
+            if (data.playerDeath) {
+                console.log('death');
+                this._currentLevel = -1;
                 this._isLoaded = false;
             }
         });

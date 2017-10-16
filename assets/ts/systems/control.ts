@@ -47,7 +47,12 @@ export default class ControlSystem {
                 input.onUp();
             }
 
-            if (!input.isLeft && !input.isRight && !input.isUp && input.onReset) {
+            if (input.isActionPrimary && input.onActionPrimary) {
+
+                input.onActionPrimary();
+            }
+
+            if (!input.isActionPrimary && !input.isLeft && !input.isRight && !input.isUp && input.onReset) {
 
                 input.onReset();
             }

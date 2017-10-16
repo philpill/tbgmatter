@@ -94,6 +94,8 @@ export default class EntityManager {
         World.clear(this._engine.world, false);
 
         this._entities = [];
+
+        this._focusBody = null;
     }
 
     setMapDimensions(height: number, width: number) {
@@ -160,20 +162,20 @@ export default class EntityManager {
         return focusX;
     }
 
-
-
     update(delta: number) {
+
+        let focusX = 0;
+
+        let focusY = 0;
 
         if (this._focusBody) {
 
-            let focusX = this._getFocusX(this._focusBody.position.x);
+            focusX = this._getFocusX(this._focusBody.position.x);
 
-            let focusY = this._getFocusY(this._focusBody.position.y);
-
-            let position = { x: focusX, y: focusY };
-
-            Bounds.shift(this._render.bounds, position);
+            focusY = this._getFocusY(this._focusBody.position.y);
         }
+
+        Bounds.shift(this._render.bounds, { x: focusX, y: focusY });
 
         Engine.update(this._engine, delta);
     }

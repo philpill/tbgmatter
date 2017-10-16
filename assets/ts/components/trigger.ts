@@ -8,11 +8,13 @@ export default class TriggerComponent implements IComponent {
     type: SystemType;
 
     nextLevel: boolean;
+    playerDeath: boolean;
 
     constructor() {
 
         this.type = SystemType.TRIGGER;
         this.nextLevel = false;
+        this.playerDeath = false;
     }
 
     destroy() {

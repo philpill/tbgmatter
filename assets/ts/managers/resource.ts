@@ -51,6 +51,15 @@ export default class ResourceManager {
         return item;
     }
 
+    getFinalLevel() {
+
+        let items = this._preload.getItems(true);
+        let length = items[0].result.manifest.length;
+        let item = this._preload.getResult(items[0].result.manifest[length - 1].id);
+
+        return item;
+    }
+
     getAudioData(resourceId: string) {
 
         let items = this._preload.getItems(true);

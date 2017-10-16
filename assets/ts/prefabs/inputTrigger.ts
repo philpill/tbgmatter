@@ -36,7 +36,7 @@ export default class InputTrigger extends Entity {
         });
 
         let input = new InputComponent({
-            onUp: () => {
+            onActionPrimary: () => {
                 trigger.nextLevel = true;
             }
         });

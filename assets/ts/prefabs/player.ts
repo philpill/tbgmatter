@@ -48,6 +48,10 @@ export default class Player extends Entity {
         }));
 
         let input = new InputComponent({
+            onActionPrimary: () => {
+
+                this.setVelocityY(display.body);
+            },
             onUp: () => {
 
                 this.setVelocityY(display.body);

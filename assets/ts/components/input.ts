@@ -10,6 +10,8 @@ export class IInputHandlers {
     onDown?: Function;
     onLeft?: Function;
     onRight?: Function;
+    onActionPrimary?: Function;
+
     onReset?: Function;
 }
 
@@ -19,19 +21,20 @@ export default class InputComponent implements IComponent {
 
     _inputManager: InputManager;
 
-    isJump: boolean;
     isLeft: boolean;
     isUp: boolean;
     isRight: boolean;
     isDown: boolean;
+    isActionPrimary: boolean;
 
     onUp: Function;
     onLeft: Function;
     onRight: Function;
-
+    onActionPrimary: Function;
     onReset: Function;
 
     constructor(handlers: IInputHandlers) {
+
 
         this.type = SystemType.CONTROL;
 
@@ -43,6 +46,7 @@ export default class InputComponent implements IComponent {
         this.onUp = handlers.onUp;
         this.onRight = handlers.onRight;
         this.onLeft = handlers.onLeft;
+        this.onActionPrimary = handlers.onActionPrimary;
 
         this.onReset = handlers.onReset;
     }
@@ -51,18 +55,19 @@ export default class InputComponent implements IComponent {
 
         let key = e.keyCode;
 
-        this.isJump = this.isJump || key === settings.key.space;
+        this.isActionPrimary = this.isActionPrimary || key === settings.key.space;
         this.isLeft = this.isLeft || key === settings.key.left;
         this.isUp = this.isUp || key === settings.key.up;
         this.isRight = this.isRight || key === settings.key.right;
         this.isDown = this.isDown || key === settings.key.down;
+
     }
 
     onKeyUp(e: KeyboardEvent) {
 
         let key = e.keyCode;
 
-        this.isJump = key === settings.key.space ? false : this.isJump;
+        this.isActionPrimary = key === settings.key.space ? false : this.isActionPrimary;
         this.isLeft = key === settings.key.left ? false : this.isLeft;
         this.isUp = key === settings.key.up ? false : this.isUp;
         this.isRight = key === settings.key.right ? false : this.isRight;
